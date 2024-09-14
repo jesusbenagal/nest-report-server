@@ -25,16 +25,37 @@ export const headerSection = (options: IHeaderOptions): Content => {
     ? {
         text: DateFormatter.getDDMMMMYYYY(new Date()),
         alignment: 'right',
-        margin: [20, 20],
+        margin: [20, 30],
+        width: 150,
+      }
+    : null;
+
+  const headerSubtitle: Content = subTitle
+    ? {
+        text: title,
+        alignment: 'center',
+        margin: [0, 2, 0, 0],
+        style: {
+          bold: true,
+          fontSize: 16,
+        },
       }
     : null;
 
   const headerTitle: Content = title
     ? {
-        text: title,
-        style: {
-          bold: true,
-        },
+        stack: [
+          {
+            text: title,
+            alignment: 'center',
+            margin: [0, 15, 0, 0],
+            style: {
+              bold: true,
+              fontSize: 22,
+            },
+          },
+          headerSubtitle,
+        ],
       }
     : null;
 

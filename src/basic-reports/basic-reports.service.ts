@@ -12,6 +12,7 @@ import {
   getHelloWorldReport,
   getEmploymentLetterReport,
   getEmploymentLetterByIdReport,
+  getCountryReport,
 } from '../reports';
 
 @Injectable()
@@ -64,5 +65,17 @@ export class BasicReportsService extends PrismaClient implements OnModuleInit {
     const doc = this.printerService.createPdf(docDefinition);
 
     return doc;
+  }
+
+  async getCountriesReport() {
+    const countries = await this.countries.findMany({
+      where: {
+        local_name: { not: null },
+      },
+    });
+
+    const docDefinition = getCountryReport({ countries });
+
+    return this.printerService.createPdf(docDefinition);
   }
 }

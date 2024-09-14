@@ -7,7 +7,7 @@ export class BasicReportsController {
   constructor(private readonly basicReportsService: BasicReportsService) {}
 
   @Get()
-  async helloWorld(@Res() res: Response) {
+  helloWorld(@Res() res: Response) {
     const pdfDoc = this.basicReportsService.helloWorld();
 
     res.setHeader('Content-Type', 'application/pdf');
@@ -16,7 +16,7 @@ export class BasicReportsController {
   }
 
   @Get('employment-letter')
-  async employmentLetter(@Res() res: Response) {
+  employmentLetter(@Res() res: Response) {
     const pdfDoc = this.basicReportsService.employmentLetter();
 
     res.setHeader('Content-Type', 'application/pdf');
@@ -34,6 +34,16 @@ export class BasicReportsController {
 
     res.setHeader('Content-Type', 'application/pdf');
     pdfDoc.info.Title = 'Employment Letter';
+    pdfDoc.pipe(res);
+    pdfDoc.end();
+  }
+
+  @Get('countries')
+  async getCountriesReport(@Res() res: Response) {
+    const pdfDoc = await this.basicReportsService.getCountriesReport();
+
+    res.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.info.Title = 'Countries Report';
     pdfDoc.pipe(res);
     pdfDoc.end();
   }
